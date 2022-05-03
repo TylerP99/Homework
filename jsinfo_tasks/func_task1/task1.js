@@ -1,0 +1,1 @@
+//There will be no difference, as if the first return is encountered, the rest of the function is forgotten anyways.
