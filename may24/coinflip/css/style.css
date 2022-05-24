@@ -1,0 +1,15 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #444;
+    color: #fff;
+}
+
+main {
+    border: 1px solid;
+
+    padding: 1rem;
+    width: 50%;
+}
