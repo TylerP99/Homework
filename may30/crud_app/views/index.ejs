@@ -14,5 +14,37 @@
         <input type="text" placeholder="quote" name="quote">
         <button type="submit">Submit</button>
     </form>
+
+    <h2>Quotes</h2>
+
+    <ul class="quotes">
+
+        <% for(let i = 0; i < quotes.length; ++i)
+        {%>
+            <li class="quote">
+
+                <span><%= quotes[i].name %>:</span>
+
+                <span><%= quotes[i].quote %></span>
+            </li>
+        <% } %>
+
+    </ul>
+
+    <section id="message"></section>
+
+    <section>
+        <h2> The Empire Strikes Back! </h2>
+        <p>Replace first Yoda's quotes with a quote written by Darth Vadar</p>
+        <button id="update-button">Replace Yoda's quote</button>
+    </section>
+
+    <section>
+        <h2> Return of the Jedi </h2>
+        <p>Delete one Darth Vadar quote. If there are none, this does nothing.</p>
+        <button id="delete-button">Delete Darth Vadar's quote</button>
+    </section>
+
+    <script src="/main.js"></script>
 </body>
 </html>

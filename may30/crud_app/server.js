@@ -6,6 +6,8 @@ const app = express();
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
+app.use(bodyParser.json());
 app.set("view engine", "ejs")
 
 MongoClient.connect(myMongoConnectionString, (err,client) => {
@@ -42,5 +44,45 @@ MongoClient.connect(myMongoConnectionString, (err,client) => {
             res.redirect("/");
         })
         .catch(error => console.error(error));
+    });
+
+    app.put("/quotes", (req, res) => {
+        quotesCollection.findOneAndUpdate(
+            {name: "Yoda"},
+            {
+                $set: {
+                    name: req.body.name,
+                    quote: req.body.quote
+                }
+            },
+            {
+                upsert: true,
+            }
+        )
+        .then(result => {
+            console.log(result)
+            res.json("Success")
+        })
+        .catch( error => {
+            console.error(error);
+        });
+    });
+
+    app.delete("/quotes", (req, res) => {
+        console.log("You made the following request: ",req)
+        quotesCollection.deleteOne(
+            {name: req.body.name}
+        )
+        .then( result => {
+            console.log(result)
+            if(result.deletedCount === 0)
+            {
+                return res.json("No quote to delete");
+            }
+            res.json(`Deleted ${req.body.name}'s quote!`);
+        })
+        .catch(error => {
+            console.error(error);
+        })
     });
 });
