@@ -1,6 +1,46 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+const mongoDB = require("mongodb");
+const MongoClient = mongoDB.MongoClient;
 const app = express();
 
-app.listen(3000, () => {
-    console.log("Listening on 3000");
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.set("view engine", "ejs")
+
+MongoClient.connect(myMongoConnectionString, (err,client) => {
+    if(err) return console.error(err);
+    console.log("Connected to DB");
+    const db = client.db("star-wars-quotes");
+    const quotesCollection = db.collection("quotes");
+
+    console.log("logg")
+
+    app.listen(8000, () => {
+        console.log("Listening on 8000");
+    });
+    
+    app.get("/", (req,res) => {
+
+        // Get quotes collection from database, find the data, convert it to an array
+        db.collection("quotes").find().toArray()
+        // Do something with the array
+        .then(results => {
+            console.log(results)
+            // Render ejs file
+            res.render("index.ejs", {quotes: results});
+
+        })
+        // Handle any errors
+        .catch(error => console.error(error));
+
+    });
+
+    app.post("/quotes", (req, res) => {
+        quotesCollection.insertOne(req.body)
+        .then(result => {
+            res.redirect("/");
+        })
+        .catch(error => console.error(error));
+    });
 });
