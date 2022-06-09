@@ -1,0 +1,20 @@
+{
+  "name": "phonebook-api",
+  "version": "1.0.0",
+  "description": "Simple phonebook api made from exercises 3.1-3.6 (so far) from fsopen",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "run dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tyler Perata",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
